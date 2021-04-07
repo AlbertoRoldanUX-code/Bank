@@ -1,9 +1,5 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// BANKIST APP
-
 // Data
 const account1 = {
   owner: 'Jonas Schmedtmann',
@@ -62,22 +58,21 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+//Display movements in the application
 
-// // for (const item of movements) {
-// //   item > 0 && console.log(`Deposit of ${item}`);
-// //   item < 0 && console.log(`Withdrawal of ${Math.abs(item)}`);
-// // }
+const displayMovements = function (movements) {
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'depost' : 'withdrawal';
 
-// movements.forEach(function (movement, index, array) {
-//   console.log(index + 1, movement);
-// });
+    const html = `
+    <div class="movements__row">
+      <div class="movements__type movements__type--${type}">${
+      i + 1
+    } ${type}</div>
+      <div class="movements__value">${mov}</div>
+    </div>`;
+  });
+};
 
-// const currencies = new Set([['USD', 'EUR', 'GBP', 'GBP']]);
-
-// currencies.forEach(function (value, key, map) {
-//   console.log(key, value);
-// });
+displayMovements(account1.movements);
