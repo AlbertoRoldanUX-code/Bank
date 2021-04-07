@@ -80,3 +80,16 @@ const displayMovements = function (movements) {
 };
 
 displayMovements(account1.movements);
+
+const createUsernames = function (user) {
+  const userName = user
+    .toLowerCase()
+    .split(' ')
+    .map(name => name[0])
+    .join('');
+  console.log(userName);
+};
+
+createUsernames('');
+
+//////////////////////////
