@@ -62,8 +62,10 @@ const inputClosePin = document.querySelector('.form__input--pin');
 //Display movements in the application
 
 const displayMovements = function (movements) {
+  containerMovements.innerHTML = ' ';
+
   movements.forEach(function (mov, i) {
-    const type = mov > 0 ? 'depost' : 'withdrawal';
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
     <div class="movements__row">
@@ -72,6 +74,8 @@ const displayMovements = function (movements) {
     } ${type}</div>
       <div class="movements__value">${mov}</div>
     </div>`;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 
