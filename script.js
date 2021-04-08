@@ -81,15 +81,25 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
-const createUsernames = function (user) {
-  const userName = user
-    .toLowerCase()
-    .split(' ')
-    .map(name => name[0])
-    .join('');
-  console.log(userName);
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce(function (acc, cur) {
+    return acc + cur;
+  }, 0);
+  labelBalance.textContent = `${balance}€`;
 };
 
-createUsernames('');
+calcDisplayBalance(account1.movements);
+
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+
+createUsernames(accounts);
 
 //////////////////////////
