@@ -135,10 +135,12 @@ btnLogin.addEventListener('click', function (e) {
 
   //Check if credentials are correct
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
-    //Display UI and welcome message
+    //Display welcome message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
     }`;
+    //Display UI
+    containerApp.style.opacity = 100;
 
     //Display movements
     //Display balance
