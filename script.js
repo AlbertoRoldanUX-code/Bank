@@ -136,6 +136,9 @@ btnLogin.addEventListener('click', function (e) {
     //Display UI
     containerApp.style.opacity = 100;
 
+    //Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+
     //Display movements
     displayMovements(currentAccount.movements);
     //Display balance
