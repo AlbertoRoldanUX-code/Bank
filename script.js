@@ -2,7 +2,7 @@
 
 // Data
 const account1 = {
-  owner: 'Jonas Schmedtmann',
+  owner: 'Alberto Roldán',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
@@ -109,8 +109,8 @@ const calcDisplaySummary = function (movements) {
 
 calcDisplaySummary(account1.movements);
 
-const createUsernames = function (accs) {
-  accs.forEach(function (acc) {
+const createUsernames = function (accounts) {
+  accounts.forEach(function (acc) {
     acc.username = acc.owner
       .toLowerCase()
       .split(' ')
@@ -121,4 +121,21 @@ const createUsernames = function (accs) {
 
 createUsernames(accounts);
 
+//Event handlers:
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  //Prevent form from submitting:
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+
+  //Check if credentials are correct
+  if (currentAccount?.currentAccount.pin === Number(inputLoginPin.value)) {
+    console.log('LOGIN');
+  }
+});
 //////////////////////////
