@@ -221,3 +221,11 @@ btnClose.addEventListener('click', function (e) {
 });
 
 //////////////////////////
+
+const numbers = [2, 4, 17, 3, 13];
+
+const bigNumbers = numbers.every(num => num > 10);
+
+console.log(bigNumbers);
+
+console.log(account4.movements.every(deposit => deposit > 0));
