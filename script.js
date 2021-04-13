@@ -179,6 +179,26 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+//Implement loan request
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const requestedLoan = Number(inputLoanAmount.value);
+  if (
+    requestedLoan > 0 &&
+    currentAccount.movements.some(function (deposit) {
+      return deposit >= requestedLoan * 0.1;
+    }) === true
+  ) {
+    //Adds requestedLoan to user
+    currentAccount.movements.push(requestedLoan);
+    //Update UI
+    updateUI(currentAccount);
+    //Clear input fields
+    inputLoanAmount.value = '';
+    inputLoanAmount.blur();
+  }
+});
+
 //Delete account from accounts array
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
