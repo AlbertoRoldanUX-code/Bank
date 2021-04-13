@@ -292,7 +292,7 @@ h2 {
 
 @media screen and (max-width: 800px) {
   .app {
-    display: flex;
+    display: block;
     flex-wrap: wrap;
     flex-direction: column;
   }
