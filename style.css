@@ -17,6 +17,11 @@ body {
   padding: 2rem;
 }
 
+nav {
+  margin: auto;
+  max-width: 100rem;
+}
+
 .welcome {
   font-size: 1.9rem;
   font-weight: 500;
