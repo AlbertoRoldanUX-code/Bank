@@ -292,8 +292,8 @@ h2 {
 
 @media screen and (max-width: 800px) {
   .app {
-    display: block;
-    flex-wrap: wrap;
+    display: flex;
+    flex-wrap: inherit;
     flex-direction: column;
   }
 }
