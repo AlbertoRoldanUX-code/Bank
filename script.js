@@ -244,4 +244,18 @@ btnSort.addEventListener('click', function (e) {
 
 //////////////////////////
 
-//Make numbers to have 2 decimals
+//Fake always logged in
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
+
+let today = new Date();
+const day = String(today.getDate()).padStart(2, '0');
+const month = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+const year = today.getFullYear();
+const hour = String(today.getHours()).padStart(2, '0');
+const min = String(today.getMinutes()).padStart(2, '0');
+today = `${day}/${month}/${year}, ${hour}:${min}h`;
+labelDate.textContent = today;
+
+//////////////////////////
