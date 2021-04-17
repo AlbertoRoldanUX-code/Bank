@@ -3,9 +3,22 @@
 // Data
 const account1 = {
   owner: 'Alberto Roldán',
-  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+
+  movementsDates: [
+    '2019-11-18T21:31:17.178Z',
+    '2019-12-23T07:42:02.383Z',
+    '2020-01-28T09:15:04.904Z',
+    '2020-04-01T10:17:24.185Z',
+    '2020-05-08T14:11:59.604Z',
+    '2020-05-27T17:01:17.194Z',
+    '2020-07-11T23:36:17.929Z',
+    '2020-07-12T10:51:36.790Z',
+  ],
+  currency: 'EUR',
+  locale: 'es-ES', // de-DE
 };
 
 const account2 = {
@@ -13,23 +26,22 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+
+  movementsDates: [
+    '2019-11-01T13:15:33.035Z',
+    '2019-11-30T09:48:16.867Z',
+    '2019-12-25T06:04:23.907Z',
+    '2020-01-25T14:18:46.235Z',
+    '2020-02-05T16:33:06.386Z',
+    '2020-04-10T14:43:26.374Z',
+    '2020-06-25T18:49:59.371Z',
+    '2020-07-26T12:01:20.894Z',
+  ],
+  currency: 'USD',
+  locale: 'en-US',
 };
 
-const account3 = {
-  owner: 'Steven Thomas Williams',
-  movements: [200, -200, 340, -300, -20, 50, 400, -460],
-  interestRate: 0.7,
-  pin: 3333,
-};
-
-const account4 = {
-  owner: 'Sarah Smith',
-  movements: [430, 1000, 700, 50, 90],
-  interestRate: 1,
-  pin: 4444,
-};
-
-const accounts = [account1, account2, account3, account4];
+const accounts = [account1, account2];
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -231,3 +243,85 @@ btnSort.addEventListener('click', function (e) {
 });
 
 //////////////////////////
+//Eating too much = food portion is larger than recommended portion
+
+//Eating too little = food portion is less than recommended portion
+
+//Eating okay amount = food portion is 10% above or below recommended portion
+
+//1º Loop over the dogs array to calculate for each dog the recommended food portion and add it to the object as a new property. Don't create a new array. The result is in grams of food, and the weight needs to be in kg.
+
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+dogs.forEach(function (dog) {
+  dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28);
+});
+
+console.log(dogs);
+
+//2º Find Sarah's dog and console.log if it's eating too much or too little.
+
+const SarahsDog = dogs.find(dog => dog.owners.includes('Sarah'));
+console.log(
+  SarahsDog.curFood > SarahsDog.recommendedFood
+    ? "It's eating too much"
+    : "It's eating too little"
+);
+
+//3º Create an array (called ownersEatTooMuch) containing all the owners of dogs who eat too much and another one with ownersEatTooLittle.
+
+const ownersEatTooMuch = dogs
+  .filter(function (dog) {
+    return dog.curFood > dog.recommendedFood;
+  })
+  .flatMap(dog => dog.owners);
+
+const ownersEatTooLittle = dogs
+  .filter(function (dog) {
+    return dog.curFood < dog.recommendedFood;
+  })
+  .flatMap(dog => dog.owners);
+
+//4º Console.log for each of the arrays something like this "Matilda and Alice and Bob's dogs eat too much!
+
+console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
+
+console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too much!`);
+
+//5º Console.log if there's any dog eating an okay amount of food. Being within a range 10% above and below the recommended portion means: current > (recommended * 0.90) && current < (recommended * 1.10). Basically, the current portion should be between 90% and 110% of the recommended portion.
+
+console.log(dogs.some(dog => dog.recommendedFood === dog.curFood));
+
+console.log(
+  dogs.some(
+    dog =>
+      dog.curFood > dog.recommendedFood * 0.9 &&
+      dog.curFood < dog.recommendedFood * 1.1
+  )
+);
+
+//6º Create an array containing all the dogs that are eating an okay amount of food (reuse the condition we use before)
+
+const healthyDogs = dogs.filter(
+  dog =>
+    dog.curFood > dog.recommendedFood * 0.9 &&
+    dog.curFood < dog.recommendedFood * 1.1
+);
+
+console.log(healthyDogs);
+
+//7º Create a shallow copy of the dogs array and sort it by the recommended food portion in an ascending order
+
+const shallowCopy = dogs.slice();
+
+//Ascending
+shallowCopy.sort(function (a, b) {
+  return a.recommendedFood - b.recommendedFood;
+});
+
+console.log(shallowCopy);
