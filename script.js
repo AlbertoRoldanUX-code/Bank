@@ -148,7 +148,7 @@ btnLogin.addEventListener('click', function (e) {
   console.log(currentAccount);
 
   //Check if credentials are correct
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+  if (currentAccount?.pin === +inputLoginPin.value) {
     //Display welcome message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
@@ -168,7 +168,7 @@ btnLogin.addEventListener('click', function (e) {
 //Implement transfer money
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value;
   const receiverAccount = accounts.find(function (acc) {
     return acc.username === inputTransferTo.value;
   });
@@ -195,7 +195,7 @@ btnTransfer.addEventListener('click', function (e) {
 //Implement loan request
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
-  const requestedLoan = Number(inputLoanAmount.value);
+  const requestedLoan = +inputLoanAmount.value;
   if (
     requestedLoan > 0 &&
     currentAccount.movements.some(function (deposit) {
@@ -218,7 +218,7 @@ btnClose.addEventListener('click', function (e) {
 
   if (
     inputCloseUsername.value === currentAccount.username &&
-    Number(inputClosePin.value) === currentAccount.pin
+    +inputClosePin.value === currentAccount.pin
   ) {
     const index = accounts.findIndex(
       acc => acc.username === currentAccount.username
@@ -243,85 +243,5 @@ btnSort.addEventListener('click', function (e) {
 });
 
 //////////////////////////
-//Eating too much = food portion is larger than recommended portion
 
-//Eating too little = food portion is less than recommended portion
-
-//Eating okay amount = food portion is 10% above or below recommended portion
-
-//1º Loop over the dogs array to calculate for each dog the recommended food portion and add it to the object as a new property. Don't create a new array. The result is in grams of food, and the weight needs to be in kg.
-
-const dogs = [
-  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
-  { weight: 8, curFood: 200, owners: ['Matilda'] },
-  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
-  { weight: 32, curFood: 340, owners: ['Michael'] },
-];
-
-dogs.forEach(function (dog) {
-  dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28);
-});
-
-console.log(dogs);
-
-//2º Find Sarah's dog and console.log if it's eating too much or too little.
-
-const SarahsDog = dogs.find(dog => dog.owners.includes('Sarah'));
-console.log(
-  SarahsDog.curFood > SarahsDog.recommendedFood
-    ? "It's eating too much"
-    : "It's eating too little"
-);
-
-//3º Create an array (called ownersEatTooMuch) containing all the owners of dogs who eat too much and another one with ownersEatTooLittle.
-
-const ownersEatTooMuch = dogs
-  .filter(function (dog) {
-    return dog.curFood > dog.recommendedFood;
-  })
-  .flatMap(dog => dog.owners);
-
-const ownersEatTooLittle = dogs
-  .filter(function (dog) {
-    return dog.curFood < dog.recommendedFood;
-  })
-  .flatMap(dog => dog.owners);
-
-//4º Console.log for each of the arrays something like this "Matilda and Alice and Bob's dogs eat too much!
-
-console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
-
-console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too much!`);
-
-//5º Console.log if there's any dog eating an okay amount of food. Being within a range 10% above and below the recommended portion means: current > (recommended * 0.90) && current < (recommended * 1.10). Basically, the current portion should be between 90% and 110% of the recommended portion.
-
-console.log(dogs.some(dog => dog.recommendedFood === dog.curFood));
-
-console.log(
-  dogs.some(
-    dog =>
-      dog.curFood > dog.recommendedFood * 0.9 &&
-      dog.curFood < dog.recommendedFood * 1.1
-  )
-);
-
-//6º Create an array containing all the dogs that are eating an okay amount of food (reuse the condition we use before)
-
-const healthyDogs = dogs.filter(
-  dog =>
-    dog.curFood > dog.recommendedFood * 0.9 &&
-    dog.curFood < dog.recommendedFood * 1.1
-);
-
-console.log(healthyDogs);
-
-//7º Create a shallow copy of the dogs array and sort it by the recommended food portion in an ascending order
-
-const shallowCopy = dogs.slice();
-
-//Ascending
-shallowCopy.sort(function (a, b) {
-  return a.recommendedFood - b.recommendedFood;
-});
-
-console.log(shallowCopy);
+//Replace all occurrences of Number with the + sign.
