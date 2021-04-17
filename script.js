@@ -195,7 +195,7 @@ btnTransfer.addEventListener('click', function (e) {
 //Implement loan request
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
-  const requestedLoan = +inputLoanAmount.value;
+  const requestedLoan = Math.floor(inputLoanAmount.value);
   if (
     requestedLoan > 0 &&
     currentAccount.movements.some(function (deposit) {
@@ -244,4 +244,4 @@ btnSort.addEventListener('click', function (e) {
 
 //////////////////////////
 
-//Replace all occurrences of Number with the + sign.
+//Round the requested loan amount
