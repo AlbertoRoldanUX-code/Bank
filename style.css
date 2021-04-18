@@ -303,4 +303,8 @@ h2 {
   .one {
     margin-top: 1rem;
   }
+
+  .movements__row {
+    padding: 2rem 1rem;
+  }
 }
