@@ -263,18 +263,20 @@ btnLoan.addEventListener('click', function (e) {
     requestedLoan > 0 &&
     currentAccount.movements.some(function (deposit) {
       return deposit >= requestedLoan * 0.1;
-    }) === true
+    })
   ) {
-    //Adds requestedLoan to user
-    currentAccount.movements.push(requestedLoan);
-    //Add loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
+    setTimeout(function () {
+      //Adds requestedLoan to user
+      currentAccount.movements.push(requestedLoan);
+      //Add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    //Update UI
-    updateUI(currentAccount);
-    //Clear input fields
-    inputLoanAmount.value = '';
-    inputLoanAmount.blur();
+      //Update UI
+      updateUI(currentAccount);
+      //Clear input fields
+      inputLoanAmount.value = '';
+      inputLoanAmount.blur();
+    }, 2500);
   }
 });
 
