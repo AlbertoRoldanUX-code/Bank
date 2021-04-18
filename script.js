@@ -165,6 +165,16 @@ btnLogin.addEventListener('click', function (e) {
     //Display UI
     containerApp.style.opacity = 100;
 
+    //Display current date and time
+    let now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); //January is 0!
+    const year = now.getFullYear();
+    const hour = String(now.getHours()).padStart(2, '0');
+    const min = String(now.getMinutes()).padStart(2, '0');
+    now = `${day}/${month}/${year}, ${hour}:${min}h`;
+    labelDate.textContent = now;
+
     //Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
@@ -196,6 +206,9 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movements.push(-amount);
     //Adds positive movement to recipient
     receiverAccount.movements.push(amount);
+    //Add transfer date
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAccount.movementsDates.push(new Date().toISOString());
     //Update UI
     updateUI(currentAccount);
   }
@@ -213,6 +226,9 @@ btnLoan.addEventListener('click', function (e) {
   ) {
     //Adds requestedLoan to user
     currentAccount.movements.push(requestedLoan);
+    //Add loan date
+    currentAccount.movementsDates.push(new Date().toISOString());
+
     //Update UI
     updateUI(currentAccount);
     //Clear input fields
@@ -257,15 +273,5 @@ btnSort.addEventListener('click', function (e) {
 currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 100;
-
-//Display current time
-let today = new Date();
-const day = String(today.getDate()).padStart(2, '0');
-const month = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-const year = today.getFullYear();
-const hour = String(today.getHours()).padStart(2, '0');
-const min = String(today.getMinutes()).padStart(2, '0');
-today = `${day}/${month}/${year}, ${hour}:${min}h`;
-labelDate.textContent = today;
 
 //////////////////////////
