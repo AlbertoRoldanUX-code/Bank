@@ -179,15 +179,28 @@ btnLogin.addEventListener('click', function (e) {
     //Display UI
     containerApp.style.opacity = 100;
 
+    // let now = new Date();
+    // const day = String(now.getDate()).padStart(2, '0');
+    // const month = String(now.getMonth() + 1).padStart(2, '0'); //January is 0!
+    // const year = now.getFullYear();
+    // const hour = String(now.getHours()).padStart(2, '0');
+    // const min = String(now.getMinutes()).padStart(2, '0');
+    // now = `${day}/${month}/${year}, ${hour}:${min}h`;
+    // labelDate.textContent = now;
     //Display current date and time
-    let now = new Date();
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0'); //January is 0!
-    const year = now.getFullYear();
-    const hour = String(now.getHours()).padStart(2, '0');
-    const min = String(now.getMinutes()).padStart(2, '0');
-    now = `${day}/${month}/${year}, ${hour}:${min}h`;
-    labelDate.textContent = now;
+    const now = new Date();
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+    };
+
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
 
     //Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
