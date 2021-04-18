@@ -82,10 +82,6 @@ const formatMovementDate = function (date, locale) {
   if (daysPassed === 1) return 'yersterday';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
 
-  // const day = String(date.getDate()).padStart(2, '0');
-  // const month = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-  // const year = date.getFullYear();
-  // return `${day}/${month}/${year}`;
   return new Intl.DateTimeFormat(locale).format(date);
 };
 
@@ -172,8 +168,38 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+const startLogOutTimer = function () {
+  const tick = () => {
+    const min = String(Math.trunc(time / 60)).padStart(2, '0');
+    const sec = String(time % 60).padStart(2, '0');
+
+    //In each call, print the remaining time to the UI
+    labelTimer.textContent = `${min}:${sec}`;
+
+    //When the timer reaches 0, stop it and log out user
+    if (time === 0) {
+      //Stops timer
+      clearInterval(timer);
+      //Display log in message
+      labelWelcome.textContent = `Log in to get started`;
+      //Set the opacity back to 0
+      containerApp.style.opacity = 0;
+    }
+
+    //Decrease 1 second
+    time--;
+  };
+  //Set time to 5 minutes
+  let time = 300;
+
+  //Call the timer every second
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
 //Event handlers:
-let currentAccount;
+let currentAccount, timer;
 
 btnLogin.addEventListener('click', function (e) {
   //Prevent form from submitting:
@@ -193,14 +219,6 @@ btnLogin.addEventListener('click', function (e) {
     //Display UI
     containerApp.style.opacity = 100;
 
-    // let now = new Date();
-    // const day = String(now.getDate()).padStart(2, '0');
-    // const month = String(now.getMonth() + 1).padStart(2, '0'); //January is 0!
-    // const year = now.getFullYear();
-    // const hour = String(now.getHours()).padStart(2, '0');
-    // const min = String(now.getMinutes()).padStart(2, '0');
-    // now = `${day}/${month}/${year}, ${hour}:${min}h`;
-    // labelDate.textContent = now;
     //Display current date and time
     const now = new Date();
     const options = {
@@ -222,6 +240,10 @@ btnLogin.addEventListener('click', function (e) {
 
     //Update UI
     updateUI(currentAccount);
+
+    //Timer
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -252,6 +274,9 @@ btnTransfer.addEventListener('click', function (e) {
     receiverAccount.movementsDates.push(new Date().toISOString());
     //Update UI
     updateUI(currentAccount);
+    //Reset timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -273,6 +298,9 @@ btnLoan.addEventListener('click', function (e) {
 
       //Update UI
       updateUI(currentAccount);
+      //Reset timer
+      clearInterval(timer);
+      timer = startLogOutTimer();
       //Clear input fields
       inputLoanAmount.value = '';
       inputLoanAmount.blur();
@@ -309,12 +337,5 @@ btnSort.addEventListener('click', function (e) {
   displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
-
-//////////////////////////
-
-//Fake always logged in
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
 
 //////////////////////////
