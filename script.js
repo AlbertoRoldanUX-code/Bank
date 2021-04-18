@@ -89,6 +89,13 @@ const formatMovementDate = function (date, locale) {
   return new Intl.DateTimeFormat(locale).format(date);
 };
 
+const formatCur = function (acc, cur) {
+  return new Intl.NumberFormat(acc.locale, {
+    style: 'currency',
+    currency: acc.currency,
+  }).format(cur);
+};
+
 //Display movements in the application
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = ' ';
@@ -109,7 +116,7 @@ const displayMovements = function (acc, sort = false) {
       i + 1
     } ${type}</div>
       <div class="movements__date">${displayDate}</div>
-      <div class="movements__value">${mov.toFixed(2)}€</div>
+      <div class="movements__value">${formatCur(currentAccount, mov)}</div>
     </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -118,24 +125,30 @@ const displayMovements = function (acc, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
+
+  labelBalance.textContent = `${formatCur(currentAccount, acc.balance)}`;
 };
 
 const calcDisplaySummary = function (acc) {
-  const incomes = acc.movements
-    .filter(mov => mov > 0)
-    .reduce((acc, cur) => acc + cur, 0);
-  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
-  const outcomes = acc.movements
-    .filter(mov => mov < 0)
-    .reduce((acc, cur) => acc + cur, 0);
-  labelSumOut.textContent = `${Math.abs(outcomes.toFixed(2))}€`;
   const totalInterest = acc.movements
     .filter(mov => mov > 0)
     .map(mov => (mov * acc.interestRate) / 100)
     .filter(int => int > 1)
     .reduce((acc, cur) => acc + cur, 0);
-  labelSumInterest.textContent = `${totalInterest.toFixed(2)}€`;
+
+  labelSumInterest.textContent = `${formatCur(currentAccount, totalInterest)}`;
+
+  const incomes = acc.movements
+    .filter(mov => mov > 0)
+    .reduce((acc, cur) => acc + cur, 0);
+
+  labelSumIn.textContent = `${formatCur(currentAccount, incomes)}`;
+
+  const outcomes = acc.movements
+    .filter(mov => mov < 0)
+    .reduce((acc, cur) => acc + cur, 0);
+
+  labelSumOut.textContent = `${formatCur(currentAccount, outcomes)}`;
 };
 
 const createUsernames = function (accounts) {
