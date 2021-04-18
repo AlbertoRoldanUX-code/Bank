@@ -162,10 +162,8 @@ nav {
 /* SUMMARY */
 .summary {
   grid-row: 5 / 6;
-  display: flex;
   align-items: baseline;
   padding: 0 0.3rem;
-  margin-top: 1rem;
 }
 
 .summary__label {
@@ -190,12 +188,17 @@ nav {
 }
 
 .btn--sort {
+  display: block;
   margin-left: auto;
   border: none;
   background: none;
   font-size: 1.3rem;
   font-weight: 500;
   cursor: pointer;
+}
+
+.one {
+  display: flex;
 }
 
 /* OPERATIONS */
@@ -295,5 +298,9 @@ h2 {
     display: flex;
     flex-wrap: inherit;
     flex-direction: column;
+  }
+
+  .one {
+    margin-top: 1rem;
   }
 }
